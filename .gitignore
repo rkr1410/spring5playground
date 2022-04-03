@@ -10,6 +10,12 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# Intellij
+.idea/
+
+# MacOSX preview stuff
+.DS_Store
+
 # Package Files #
 *.jar
 *.war
