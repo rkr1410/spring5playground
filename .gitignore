@@ -13,6 +13,12 @@
 # Intellij
 .idea/
 
+# H2 database files
+data/
+
+# Generated files (classes, sources etc.)
+target/
+
 # MacOSX preview stuff
 .DS_Store
 

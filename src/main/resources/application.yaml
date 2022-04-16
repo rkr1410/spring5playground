@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    # Allows multiple processes to access the DB w/out manually starting a server.
+    # E.g. can access the DB from intellij when app is running (use the same URL from intellij).
+    # Unfortunately, this doesn't work with in-memory databases.
+    url: jdbc:h2:file:./data/mydb;AUTO_SERVER=TRUE
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        SQL: DEBUG
+#      type:
+#        descriptor:
+#          sql:
+#            BasicBinder: TRACE
+
