@@ -8,4 +8,4 @@
 - as above, but create a `@MappedSuperclass` for single implementation and use a single sequence for all tables, [mind the disadvantages](https://stackoverflow.com/questions/1536479/asking-for-opinions-one-sequence-for-all-tables) 
 
 
-### Check out: `@Embedded/@Embeddable`
+### Check out: `@Embedded/@Embeddable`, `@Stateful`, `@PersistenceContext`

@@ -2,11 +2,12 @@ package net.rkr1410.playground.thing;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@MappedSuperclass
-public abstract class Thing {
+@Entity
+public class Thing {
     // TODO Maybe a GUID after all? Could have an id-before-insert then,
     // and same id generation strategy both for SQL and document DBs
 
@@ -14,9 +15,20 @@ public abstract class Thing {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private ThingType type;
+
     // spring's jpa default is 255
     @Size(max = 255)
     private String shortDesc;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    private Thing parent;
+
+    @OneToMany(mappedBy = "parent")
+    private Set<Thing> children = new HashSet<>();
 
     public long getId() {
         return id;
@@ -30,7 +42,22 @@ public abstract class Thing {
         this.shortDesc = shortDesc;
     }
 
-    public abstract Set<? extends Thing> getChildren();
+    public ThingType getType() {
+        return type;
+    }
+
+    public void setType(ThingType type) {
+        this.type = type;
+    }
+
+    public void addChild(Thing child) {
+        children.add(child);
+        child.parent = this;
+    }
+
+    public Set<? extends Thing> getChildren() {
+        return children;
+    }
 
     @Override public boolean equals(Object o) {
         if (this == o) return true;
