@@ -19,8 +19,8 @@ public class Thing {
     @Column(name = "type", nullable = false)
     private ThingType type;
 
-    // spring's jpa default is 255
     @Size(max = 255)
+    @Column(name = "short_desc", nullable = false, length = 255)
     private String shortDesc;
 
     @ManyToOne
@@ -53,6 +53,18 @@ public class Thing {
     public void addChild(Thing child) {
         children.add(child);
         child.parent = this;
+    }
+
+    public void addTag(String tag) {
+
+    }
+
+    public Thing getParent() {
+        return parent;
+    }
+
+    public void setParent(Thing parent) {
+        this.parent = parent;
     }
 
     public Set<? extends Thing> getChildren() {
