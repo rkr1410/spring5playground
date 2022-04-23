@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -24,8 +24,9 @@ public class IntegrationThingTest {
         em.persist(aThing);
 
         assertThatThrownBy(() -> em.flush())
-                .isInstanceOf(PersistenceException.class)
-                .hasStackTraceContaining("short_desc");
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasStackTraceContaining("must not be null")
+                .hasStackTraceContaining("shortDesc");
     }
 
     @Test
@@ -36,7 +37,8 @@ public class IntegrationThingTest {
         em.persist(aThing);
 
         assertThatThrownBy(() -> em.flush())
-                .isInstanceOf(PersistenceException.class)
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasStackTraceContaining("must not be null")
                 .hasStackTraceContaining("type");
     }
 

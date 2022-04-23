@@ -1,6 +1,7 @@
 package net.rkr1410.playground.thing;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,10 +16,12 @@ public class Thing {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private ThingType type;
 
+    @NotNull
     @Size(max = 255)
     @Column(name = "short_desc", nullable = false, length = 255)
     private String shortDesc;

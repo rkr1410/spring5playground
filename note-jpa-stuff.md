@@ -1,7 +1,7 @@
 ### Random stuff
 - Use `@Repository` to enable exception translation from JPA exceptions to Spring’s `DataAccessException` hierarchy
 
-### The `equals/hashCode` conundrum
+### TODO: resolve the `equals/hashCode` conundrum
 - application `uuid id` generation (instead of letting hibernate/database generate it)
 - go with `Object` implementations
 - do a per class implementation based on `instanceof` and the `id` field, and just don't put non-persisted entities in collections
