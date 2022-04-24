@@ -1,11 +1,11 @@
 package net.rkr1410.playground.thing;
 
+import net.rkr1410.playground.tag.Tag;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Thing {
@@ -23,15 +23,27 @@ public class Thing {
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "short_desc", nullable = false, length = 255)
+    @Column(name = "short_desc", nullable = false)
     private String shortDesc;
 
     @ManyToOne
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Thing parent;
 
+    // TODO Use sets instead of lists as soon ad uid is in place, also in other entities
+    @ManyToMany
+    @JoinTable(name = "thing_tags",
+            joinColumns = @JoinColumn(name = "thing_id",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id",
+                    referencedColumnName = "id"))
+    private List<Tag> tags = new ArrayList<>();
+
     @OneToMany(mappedBy = "parent")
-    private Set<Thing> children = new HashSet<>();
+    private List<Thing> children = new ArrayList<>();
+
+    public Thing() {
+    }
 
     public long getId() {
         return id;
@@ -55,11 +67,12 @@ public class Thing {
 
     public void addChild(Thing child) {
         children.add(child);
-        child.parent = this;
+        child.setParent(this);
     }
 
-    public void addTag(String tag) {
-
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        tag.addTaggedThing(this);
     }
 
     public Thing getParent() {
@@ -70,8 +83,12 @@ public class Thing {
         this.parent = parent;
     }
 
-    public Set<? extends Thing> getChildren() {
+    public List<? extends Thing> getChildren() {
         return children;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
     }
 
     @Override public boolean equals(Object o) {
