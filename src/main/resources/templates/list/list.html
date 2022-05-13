@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List test</title>
+</head>
+<body>
+    <ul>
+        <b><span th:text="${list.getShortDesc()}">whatever</span></b>
+        <li th:each="item: ${list.getChildren()}">
+            <span th:text="${item.getShortDesc()}">Dapibus ac facilisis in</span>
+        </li>
+    </ul>
+</body>
+</html>

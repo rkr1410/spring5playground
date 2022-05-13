@@ -9,4 +9,7 @@ public interface ThingRepository extends JpaRepository<Thing, Long> {
 
     @Query("SELECT lst FROM Thing lst where lst.type = net.rkr1410.playground.thing.ThingType.LIST")
     Set<Thing> getLists();
+
+    @Query("SELECT lst FROM Thing lst  JOIN FETCH lst.children WHERE lst.type = net.rkr1410.playground.thing.ThingType.LIST")
+    Set<Thing> getListsWithChildren();
 }

@@ -3,6 +3,7 @@ package net.rkr1410.playground;
 import net.rkr1410.playground.tag.Tag;
 import net.rkr1410.playground.tag.TagRepository;
 import net.rkr1410.playground.thing.Thing;
+import net.rkr1410.playground.thing.ThingRepository;
 import net.rkr1410.playground.thing.ThingType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
@@ -22,10 +23,13 @@ public class BoostrapPlaygroundData implements CommandLineRunner {
 
     private final EntityManager em;
     private final ApplicationContext ctx;
+    private final ThingRepository thingRepository;
 
-    public BoostrapPlaygroundData(EntityManager em, ApplicationContext ctx) {
+    public BoostrapPlaygroundData(EntityManager em, ApplicationContext ctx,
+                                  ThingRepository thingRepository) {
         this.em = em;
         this.ctx = ctx;
+        this.thingRepository = thingRepository;
     }
 
     @Override public void run(String... args) {
@@ -44,14 +48,13 @@ public class BoostrapPlaygroundData implements CommandLineRunner {
         retrieve();
     }
 
-    @Transactional
     public void retrieve() {
-        Thing list = (Thing) em.createQuery("SELECT t from Thing t" +
-                        " WHERE t.type = net.rkr1410.playground.thing.ThingType" +
-                        ".LIST")
-                .getSingleResult();
+        Thing list = thingRepository.getListsWithChildren().iterator().next();
         System.err.println(list.getShortDesc());
+        printItems(list);
+    }
 
+    public void printItems(Thing list) {
         for (Thing item : list.getChildren()) {
             System.err.println(" - " + item.getShortDesc());
         }

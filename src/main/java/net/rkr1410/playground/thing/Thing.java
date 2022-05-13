@@ -31,6 +31,8 @@ public class Thing {
     private Thing parent;
 
     // TODO Use sets instead of lists as soon ad uid is in place, also in other entities
+    //  ...or don't? as it can hide bag exception, n+1 or cartesian product queries...
+    //  https://stackoverflow.com/questions/4334970/hibernate-throws-multiplebagfetchexception-cannot-simultaneously-fetch-multipl
     @ManyToMany
     @JoinTable(name = "thing_tags",
             joinColumns = @JoinColumn(name = "thing_id",
