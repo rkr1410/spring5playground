@@ -9,3 +9,7 @@
 
 
 ### Check out: `@IdClass/@Embedded/@Embeddable`, `@Stateful`, `@PersistenceContext`
+
+### Stuff to ponder:
+- What to use for JSON interfaces validation? Look into Swagger?
+- Maybe write a small package with MVC before going full rest/react/whatnot? Just as an example, who knows, may be useful to know the stuff at least a tad. Ditch thymeleaf or not?
